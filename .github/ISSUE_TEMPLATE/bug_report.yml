@@ -1,0 +1,62 @@
+name: Bug Report
+description: Report a reproducible bug or unexpected macOS behavior in SnipBar
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting an issue! For security vulnerabilities, please follow `SECURITY.md` and use GitHub Security Advisories instead of opening a public issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what went wrong.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Exact steps or keyboard shortcuts to reproduce the issue.
+      placeholder: |
+        1. Press ⌘⇧V while in Xcode
+        2. Press ⌘F and type "..."
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs. Actual Behavior
+      description: What you expected to happen and what happened instead.
+    validations:
+      required: true
+
+  - type: input
+    id: macos_version
+    attributes:
+      label: macOS Version
+      placeholder: e.g., macOS 15.2 (Apple Silicon M3)
+    validations:
+      required: true
+
+  - type: input
+    id: app_version
+    attributes:
+      label: SnipBar Version / Build Method
+      placeholder: e.g., v1.0.0 via ./scripts/build-release.sh or Xcode
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: permissions
+    attributes:
+      label: Environment Context
+      options:
+        - label: Accessibility permission is granted (Auto-Paste enabled)
+        - label: Occurs over a full-screen macOS Space
+        - label: Launch at Login is enabled

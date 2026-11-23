@@ -1,0 +1,50 @@
+# macOS & Finder
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Xcode & XcodeGen (project.yml is the source of truth)
+*.xcodeproj/
+*.xcworkspace/
+!default.xcworkspace/
+xcuserdata/
+*.xcuserdatad/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.pbxuser
+*.mode1v3
+*.perspectivev3
+*.moved-aside
+*.hmap
+*.ipa
+*.dmg
+*.pkg
+*.dSYM.zip
+*.dSYM
+DerivedData/
+build/
+dist/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local signing, snippet exports & environment overrides
+*.mobileprovision
+*.provisionprofile
+*.p12
+*.cer
+*.snipbar.json
+.env
+.env.local
+.env.*
+!.env.example

@@ -1,0 +1,29 @@
+name: Feature Request
+description: Propose a new feature or UX improvement for SnipBar
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Use Case
+      description: What workflow friction or missing capability does this solve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Describe the behavior, shortcut, or UI you would like to see.
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Native macOS & Privacy Considerations
+      description: Does this require any new macOS permissions, frameworks, or storage changes?
+      placeholder: e.g., No new permissions required; stays 100% local.
+    validations:
+      required: false

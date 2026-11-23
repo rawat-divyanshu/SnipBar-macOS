@@ -1,0 +1,71 @@
+name: SnipBar
+options:
+  bundleIdPrefix: dev.snipbar
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "16.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    ENABLE_HARDENED_RUNTIME: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    DEAD_CODE_STRIPPING: YES
+
+targets:
+  SnipBar:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/SnipBar
+      - path: Resources/Assets.xcassets
+    info:
+      path: Config/Info.plist
+      properties:
+        CFBundleDisplayName: SnipBar
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"
+        CFBundleIconFile: AppIcon
+        CFBundleIconName: AppIcon
+        LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
+        LSUIElement: true
+        NSPrincipalClass: NSApplication
+        NSHumanReadableCopyright: "Copyright © 2026 SnipBar Contributors. MIT License."
+    entitlements:
+      path: Config/SnipBar.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.snipbar.macos
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: YES
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        # "Sign to Run Locally" (ad-hoc signing) out of the box:
+        # Zero Apple ID login required, zero 7-day expiry, and shareable with testers.
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "-"
+        DEVELOPMENT_TEAM: ""
+
+  SnipBarTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests/SnipBarTests
+    dependencies:
+      - target: SnipBar
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.snipbar.macos.tests
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "-"
+        DEVELOPMENT_TEAM: ""
+
+schemes:
+  SnipBar:
+    build:
+      targets:
+        SnipBar: all
+        SnipBarTests: [test]
+    test:
+      targets:
+        - SnipBarTests

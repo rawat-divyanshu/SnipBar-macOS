@@ -1,0 +1,64 @@
+name: macOS CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build & Test (macOS 15 / Swift 5.10+)
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show Swift & Xcode versions
+        run: |
+          swift --version
+          xcodebuild -version
+
+      - name: Run SwiftPM unit tests
+        run: swift test --parallel
+
+      - name: Build SwiftPM release binary
+        run: swift build -c release
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project & build Release .app
+        run: |
+          xcodegen generate
+          xcodebuild \
+            -project SnipBar.xcodeproj \
+            -scheme SnipBar \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=YES \
+            CODE_SIGN_IDENTITY="-" \
+            build
+
+      - name: Package SnipBar.app artifact
+        run: |
+          mkdir -p dist
+          ditto -c -k --sequesterRsrc --keepParent \
+            build/Build/Products/Release/SnipBar.app \
+            dist/SnipBar-macOS-arm64.zip
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SnipBar-macOS-Release
+          path: dist/SnipBar-macOS-arm64.zip
+          retention-days: 14

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Intentionally empty for "Sign to Run Locally" (ad-hoc) builds:
+         - Requires zero Apple Developer Provisioning Profiles (never expires after 7 days)
+         - Allows sharing SnipBar.app directly with MVP testers at $0 cost
+         - Enables LAContext Touch ID, Carbon Global Hotkeys, SMAppService, and CGEvent Auto-Paste -->
+</dict>
+</plist>

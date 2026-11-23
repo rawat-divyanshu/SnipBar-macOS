@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g., v1.0.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Publish macOS Release
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine release tag
+        id: meta
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Run unit tests
+        run: swift test --parallel
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project & build Release .app
+        run: |
+          xcodegen generate
+          xcodebuild \
+            -project SnipBar.xcodeproj \
+            -scheme SnipBar \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=YES \
+            CODE_SIGN_IDENTITY="-" \
+            build
+
+      - name: Package release archive & SHA-256 checksum
+        run: |
+          mkdir -p dist
+          ZIP_NAME="SnipBar-macOS-${{ steps.meta.outputs.tag }}.zip"
+          ditto -c -k --sequesterRsrc --keepParent \
+            build/Build/Products/Release/SnipBar.app \
+            "dist/${ZIP_NAME}"
+          (cd dist && shasum -a 256 "${ZIP_NAME}" > "${ZIP_NAME}.sha256")
+          cat "dist/${ZIP_NAME}.sha256"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ steps.meta.outputs.tag }}"
+          ZIP_PATH="dist/SnipBar-macOS-${TAG}.zip"
+          SHA_PATH="dist/SnipBar-macOS-${TAG}.zip.sha256"
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            gh release upload "${TAG}" "${ZIP_PATH}" "${SHA_PATH}" --clobber
+          else
+            gh release create "${TAG}" "${ZIP_PATH}" "${SHA_PATH}" \
+              --title "SnipBar ${TAG}" \
+              --generate-notes
+          fi
