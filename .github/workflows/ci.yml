@@ -57,7 +57,7 @@ jobs:
             dist/SnipBar-macOS-arm64.zip
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: SnipBar-macOS-Release
           path: dist/SnipBar-macOS-arm64.zip
