@@ -3,10 +3,13 @@
 **A native macOS menu bar snippet manager and 50-entry direct-paste clipboard stack.**
 
 [![macOS CI](https://github.com/rawat-divyanshu/SnipBar-macOS/actions/workflows/ci.yml/badge.svg)](https://github.com/rawat-divyanshu/SnipBar-macOS/actions/workflows/ci.yml)
+[![Website](https://img.shields.io/badge/website-live%20demo-0284C7)](https://rawat-divyanshu.github.io/snipbar/)
 ![Platform: macOS 14+](https://img.shields.io/badge/macOS-14.0%2B-000000?logo=apple&logoColor=white)
 ![Swift: 5.10+](https://img.shields.io/badge/Swift-5.10%2B-F05138?logo=swift&logoColor=white)
 ![Dependencies: Zero](https://img.shields.io/badge/dependencies-0-34D399)
 ![License: MIT](https://img.shields.io/badge/license-MIT-38BDF8)
+
+> **Website & Interactive Sandbox:** [https://rawat-divyanshu.github.io/snipbar/](https://rawat-divyanshu.github.io/snipbar/)
 
 SnipBar is built strictly with native Apple frameworks—**AppKit (`NSPanel` + `NSStatusItem`)**, **SwiftUI**, **SwiftData**, **LocalAuthentication (Touch ID)**, and **Carbon HotKeys**—with zero Electron overhead, zero external package dependencies, and zero telemetry.
 
@@ -199,6 +202,7 @@ SnipBar-macOS/
 
 ## Documentation & Community
 
+- [Website & Live Demo](https://rawat-divyanshu.github.io/snipbar/) — Interactive product showcase & downloads ([website repo](https://github.com/rawat-divyanshu/snipbar))
 - [Changelog](CHANGELOG.md) — Release notes and version history
 - [Contributing Guide](CONTRIBUTING.md) — Setup, testing, code style, and pull request workflow
 - [Security Policy](SECURITY.md) — Privacy guarantees and responsible vulnerability disclosure
